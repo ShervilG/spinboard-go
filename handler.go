@@ -6,5 +6,5 @@ import (
 )
 
 func handleHelloWorld(w http.ResponseWriter, r *http.Request) {
-	io.WriteString(w, "Hello, World from Spinboard go!")
+	io.WriteString(w, "Spinboard Go says hello !")
 }
