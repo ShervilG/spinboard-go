@@ -20,15 +20,15 @@ jobs:
         uses: docker/login-action@v2
         with:
           registry: https://shabbiregistry.azurecr.io/
-          username: ${{ secrets.AzureAppService_ContainerUsername_747e3b4693a9431dbacf3559d00dc9a9 }}
-          password: ${{ secrets.AzureAppService_ContainerPassword_2d4e1dd68b08419098e523d69e68e438 }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
 
       - name: Build and push container image to registry
         uses: docker/build-push-action@v3
         with:
           context: .
           push: true
-          tags: shabbiregistry.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_747e3b4693a9431dbacf3559d00dc9a9 }}/spinboard-go:${{ github.sha }}
+          tags: shabbiregistry.azurecr.io/${{ secrets.ACR_USERNAME }}/spinboard-go:${{ github.sha }}
           file: ./Dockerfile
 
   deploy:
@@ -45,5 +45,4 @@ jobs:
         with:
           app-name: 'spinboard'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_254c7137e116400386499e0c39d7fbf7 }}
-          images: 'shabbiregistry.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_747e3b4693a9431dbacf3559d00dc9a9 }}/spinboard-go:${{ github.sha }}'
+          images: 'shabbiregistry.azurecr.io/${{ secrets.ACR_USERNAME }}/spinboard-go:${{ github.sha }}'
