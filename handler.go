@@ -7,7 +7,7 @@ import (
 )
 
 func handleHelloWorld(w http.ResponseWriter, r *http.Request) {
-	io.WriteString(w, "Spinboard Go says hello !")
+	io.WriteString(w, "Hello World !")
 }
 
 func timeHandler(w http.ResponseWriter, r *http.Request) {
