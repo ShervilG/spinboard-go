@@ -1,12 +1,14 @@
 package httphandler
 
 import (
+	"fmt"
 	"io"
 	"net/http"
 	"time"
 )
 
 func HandleHelloWorld(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Request for hello world !")
 	io.WriteString(w, "Hello Again World !")
 }
 
