@@ -21,8 +21,10 @@ func ScheduleCsgoReminderMessage(s *discordgo.Session) {
 
 			istTime := currentTime.In(istLocation)
 			hour := istTime.Hour()
-			if hour >= 23 && hour < 24 {
-				s.ChannelMessageSend(CSGO_CHANNEL_ID, "Playing CS Today folks ?")
+			if hour >= 20 && hour < 21 {
+				if s != nil {
+					s.ChannelMessageSend(CSGO_CHANNEL_ID, "Playing CS Today folks ?")
+				}
 			}
 
 			time.Sleep(1 * time.Hour)
