@@ -19,6 +19,9 @@ func main() {
 
 	discordSession.Identify.Intents = discordgo.IntentsGuilds | discordgo.IntentsGuildMessages | discordgo.IntentsDirectMessages | discordgo.IntentsGuildPresences
 	discordSession.AddHandler(discordhandler.HandleHello)
+	discordSession.AddHandler(func(s *discordgo.Session, r *discordgo.Ready) {
+		s.StateEnabled = true
+	})
 	discordSession.Open()
 	defer discordSession.Close()
 
