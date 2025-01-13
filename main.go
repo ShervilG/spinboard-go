@@ -5,32 +5,41 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/ShervilG/spinboard-go/cron"
 	"github.com/ShervilG/spinboard-go/discordhandler"
 	"github.com/ShervilG/spinboard-go/httphandler"
 	"github.com/bwmarrin/discordgo"
 )
 
-func main() {
-	discordBotToken := os.Getenv("BUNTY_BOT_TOKEN")
-	discordSession, err := discordgo.New("Bot " + discordBotToken)
-	if err != nil {
-		fmt.Printf("Error creating Discord session: %v\n", err)
-	}
+var ds *discordgo.Session
 
-	discordSession.Identify.Intents = discordgo.IntentsGuilds | discordgo.IntentsGuildMessages | discordgo.IntentsDirectMessages | discordgo.IntentsGuildPresences
-	discordSession.AddHandler(discordhandler.HandleHello)
-	discordSession.AddHandler(func(s *discordgo.Session, r *discordgo.Ready) {
+func main() {
+	// Discord
+	discordBotToken := os.Getenv("BUNTY_BOT_TOKEN")
+	ds, _ = discordgo.New("Bot " + discordBotToken)
+
+	ds.Identify.Intents = discordgo.IntentsGuilds | discordgo.IntentsGuildMessages | discordgo.IntentsDirectMessages | discordgo.IntentsGuildPresences
+	ds.AddHandler(discordhandler.HandleHello)
+	ds.AddHandler(func(s *discordgo.Session, r *discordgo.Ready) {
 		s.StateEnabled = true
 	})
-	err = discordSession.Open()
+	err := ds.Open()
 	if err != nil {
 		fmt.Println("Error opening Discord session: ", err)
 	}
 
-	defer discordSession.Close()
+	defer ds.Close()
 
+	// Crons
+	scheduleCrons()
+
+	// HTTP Server
 	http.HandleFunc("/", httphandler.HandleHelloWorld)
 	http.HandleFunc("/time", httphandler.TimeHandler)
 
 	http.ListenAndServe(":8080", nil)
+}
+
+func scheduleCrons() {
+	cron.ScheduleCsgoReminderMessage(ds)
 }
