@@ -22,7 +22,11 @@ func main() {
 	discordSession.AddHandler(func(s *discordgo.Session, r *discordgo.Ready) {
 		s.StateEnabled = true
 	})
-	discordSession.Open()
+	err = discordSession.Open()
+	if err != nil {
+		fmt.Println("Error opening Discord session: ", err)
+	}
+
 	defer discordSession.Close()
 
 	http.HandleFunc("/", httphandler.HandleHelloWorld)

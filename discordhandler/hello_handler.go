@@ -10,6 +10,4 @@ func HandleHello(s *discordgo.Session, m *discordgo.MessageCreate) {
 	if m.Content == "!hello" {
 		s.ChannelMessageSend(m.ChannelID, "Hello, "+m.Author.Username)
 	}
-
-	s.ChannelMessageSend(m.ChannelID, "Hello, "+m.Author.Username)
 }
