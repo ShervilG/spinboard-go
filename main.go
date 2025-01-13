@@ -5,11 +5,10 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/ShervilG/spinboard-go/discordhandler"
 	"github.com/ShervilG/spinboard-go/httphandler"
 	"github.com/bwmarrin/discordgo"
 )
-
-var discordSession *discordgo.Session
 
 func main() {
 	discordBotToken := os.Getenv("BUNTY_BOT_TOKEN")
@@ -19,6 +18,7 @@ func main() {
 	}
 
 	discordSession.Identify.Intents = discordgo.IntentsGuilds | discordgo.IntentsGuildMessages | discordgo.IntentsDirectMessages | discordgo.IntentsGuildPresences
+	discordSession.AddHandler(discordhandler.HandleHello)
 	discordSession.Open()
 	defer discordSession.Close()
 
