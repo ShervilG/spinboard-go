@@ -9,8 +9,6 @@ import (
 var CSGO_CHANNEL_ID string = "711131294452678707"
 
 func ScheduleCsgoReminderMessage(s *discordgo.Session) {
-	ch := make(chan bool)
-
 	go func() {
 		for {
 			currentTime := time.Now().UTC()
@@ -30,6 +28,4 @@ func ScheduleCsgoReminderMessage(s *discordgo.Session) {
 			time.Sleep(1 * time.Hour)
 		}
 	}()
-
-	<-ch
 }
