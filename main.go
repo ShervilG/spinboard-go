@@ -38,7 +38,7 @@ func main() {
 	http.HandleFunc("/ping", httphandler.PingHanlder)
 	http.HandleFunc("/time", httphandler.TimeHandler)
 
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":8000", nil)
 }
 
 func scheduleCrons() {
