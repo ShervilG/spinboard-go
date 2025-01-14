@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/ShervilG/spinboard-go/cache"
 	"github.com/ShervilG/spinboard-go/cron"
 	"github.com/ShervilG/spinboard-go/discordhandler"
 	"github.com/ShervilG/spinboard-go/httphandler"
@@ -34,10 +35,14 @@ func main() {
 	// Crons
 	scheduleCrons()
 
+	// Setup Cache
+	cache.SetupCache()
+
 	// HTTP Server
 	http.HandleFunc("/", httphandler.PingHanlder)
 	http.HandleFunc("/ping", httphandler.PingHanlder)
 	http.HandleFunc("/time", httphandler.TimeHandler)
+	http.HandleFunc("/weather", httphandler.WeatherHandler)
 
 	http.ListenAndServe(":8000", nil)
 }
