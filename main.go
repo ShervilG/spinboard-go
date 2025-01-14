@@ -22,6 +22,7 @@ func main() {
 	ds.Identify.Intents = discordgo.IntentsGuilds | discordgo.IntentsGuildMessages | discordgo.IntentsDirectMessages | discordgo.IntentsGuildPresences
 	ds.AddHandler(discordhandler.HandleHello)
 	ds.AddHandler(discordhandler.HandleCsAssemble)
+	ds.AddHandler(discordhandler.HandleWeather)
 	ds.AddHandler(func(s *discordgo.Session, r *discordgo.Ready) {
 		s.StateEnabled = true
 	})
