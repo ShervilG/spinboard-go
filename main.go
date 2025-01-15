@@ -19,10 +19,11 @@ func main() {
 	discordBotToken := os.Getenv("BUNTY_BOT_TOKEN")
 	ds, _ = discordgo.New("Bot " + discordBotToken)
 
-	ds.Identify.Intents = discordgo.IntentsGuilds | discordgo.IntentsGuildMessages | discordgo.IntentsDirectMessages | discordgo.IntentsGuildPresences
+	ds.Identify.Intents = discordgo.IntentsGuilds | discordgo.IntentsGuildMessages | discordgo.IntentsDirectMessages | discordgo.IntentsGuildPresences | discordgo.IntentsGuildVoiceStates
 	ds.AddHandler(discordhandler.HandleHello)
 	ds.AddHandler(discordhandler.HandleCsAssemble)
 	ds.AddHandler(discordhandler.HandleWeather)
+	ds.AddHandler(discordhandler.HandleCsVoiceChannelJoin)
 	ds.AddHandler(func(s *discordgo.Session, r *discordgo.Ready) {
 		s.StateEnabled = true
 	})
