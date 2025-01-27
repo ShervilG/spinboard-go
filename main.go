@@ -9,6 +9,7 @@ import (
 	"github.com/ShervilG/spinboard-go/cron"
 	"github.com/ShervilG/spinboard-go/discordhandler"
 	"github.com/ShervilG/spinboard-go/httphandler"
+	"github.com/ShervilG/spinboard-go/rediscache"
 	"github.com/bwmarrin/discordgo"
 )
 
@@ -39,12 +40,15 @@ func main() {
 
 	// Setup Cache
 	cache.SetupCache()
+	rediscache.SetupRedisClient()
 
 	// HTTP Server
 	http.HandleFunc("/", httphandler.PingHanlder)
 	http.HandleFunc("/ping", httphandler.PingHanlder)
 	http.HandleFunc("/time", httphandler.TimeHandler)
 	http.HandleFunc("/weather", httphandler.WeatherHandler)
+	http.HandleFunc("/cache/set", httphandler.CacheSetHandler)
+	http.HandleFunc("/cache/get", httphandler.CacheGetHandler)
 
 	http.ListenAndServe(":8000", nil)
 }
