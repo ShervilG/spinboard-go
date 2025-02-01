@@ -26,7 +26,7 @@ func HandleReminderSet(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 	message := ""
 	for _, part := range parts[1 : len(parts)-1] {
-		message += part
+		message += (" " + part)
 	}
 	expiry, err := strconv.ParseInt(parts[len(parts)-1], 10, 32)
 	if err != nil {
