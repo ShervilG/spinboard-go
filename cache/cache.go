@@ -9,7 +9,7 @@ import (
 var cache *ttlcache.Cache[string, string]
 
 func SetupCache() {
-	cache = ttlcache.New[string, string](
+	cache = ttlcache.New(
 		ttlcache.WithTTL[string, string](30 * time.Minute),
 	)
 

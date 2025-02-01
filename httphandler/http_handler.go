@@ -7,11 +7,17 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/ShervilG/spinboard-go/ratelimiter"
 	"github.com/ShervilG/spinboard-go/rediscache"
 	"github.com/ShervilG/spinboard-go/weather"
 )
 
 func TimeHandler(w http.ResponseWriter, r *http.Request) {
+	if ratelimiter.IsRateLimited("ratelimit::time", 5, time.Minute) {
+		http.Error(w, "Rate limited", http.StatusTooManyRequests)
+		return
+	}
+
 	io.WriteString(w, "The time is: "+time.Now().String())
 }
 
@@ -20,6 +26,11 @@ func PingHanlder(w http.ResponseWriter, r *http.Request) {
 }
 
 func WeatherHandler(w http.ResponseWriter, r *http.Request) {
+	if ratelimiter.IsRateLimited("ratelimit::weather", 10, time.Minute) {
+		http.Error(w, "Rate limited", http.StatusTooManyRequests)
+		return
+	}
+
 	queryParams := r.URL.Query()
 	localityId := queryParams.Get("locality_id")
 	if localityId != "" {
