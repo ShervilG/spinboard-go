@@ -25,6 +25,7 @@ func main() {
 		ds.AddHandler(discordhandler.HandleWeather)
 		ds.AddHandler(discordhandler.HandleCsVoiceChannelJoin)
 		ds.AddHandler(discordhandler.HandleReminderSet)
+		ds.AddHandler(discordhandler.HandleAndModerateAllMessages)
 		ds.AddHandler(func(s *discordgo.Session, r *discordgo.Ready) {
 			s.StateEnabled = true
 		})
